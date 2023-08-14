@@ -9,8 +9,6 @@ public class PromocionDeProducto extends Promocion{
     Marca marca;
     public PromocionDeProducto(LocalDate fechaInicio, LocalDate fechaFin, Marca marca) throws FechaInvalidaExcepcion {
         super(fechaInicio,fechaFin);
-        this.fechaInicio = fechaInicio;
-        this.fechaFin = fechaFin;
         this.marca = marca;
     }
 
