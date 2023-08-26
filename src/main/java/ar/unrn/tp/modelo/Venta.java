@@ -1,22 +1,23 @@
 package ar.unrn.tp.modelo;
 
 import ar.unrn.tp.excepciones.ProductoInvalidoExcepcion;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@NoArgsConstructor
 public class Venta extends ModeloGenerico{
     LocalDateTime fechaYHora;
 
-    @Embedded
+    @OneToOne
     Cliente cliente;
+    @OneToMany(cascade={CascadeType.ALL})
     List<ProductoVendido> productoVendidos;
-
-    @Embedded
+    @OneToOne
     TarjetaDeCredito tarjetaDeCredito;
     double montoTotal;
 

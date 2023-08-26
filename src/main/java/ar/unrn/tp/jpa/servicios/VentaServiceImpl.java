@@ -21,9 +21,14 @@ public class VentaServiceImpl extends GenericServiceImpl implements VentaService
         inTransactionExecute((em) -> {
             List<Promocion> promociones = em.createQuery("SELECT o FROM PromocionDeCompra o ").getResultList();
             promociones.addAll(em.createQuery("SELECT o FROM PromocionDeProducto o ").getResultList());
-            //List<ProductoDisponible> listaProductos = em.createQuery("SELECT o FROM ProductoDisponible o WHERE o.id IN :ids", ProductoDisponible.class).setParameter("ids", productos).getResultList();
+            List<ProductoDisponible> listaProductos = em.createQuery("SELECT o FROM ProductoDisponible o WHERE o.id IN :ids", ProductoDisponible.class).setParameter("ids", productos).getResultList();
 
-            //em.persist( new Carrito(em.getReference(Cliente.class,idCliente),listaProductos,promociones,servicioValidadorTarjetas).realizarCompra(em.getReference(TarjetaDeCredito.class,idTarjeta)));
+            try {
+                Venta venta = new Carrito(em.getReference(Cliente.class,idCliente),listaProductos,promociones,servicioValidadorTarjetas).realizarCompra(em.getReference(TarjetaDeCredito.class,idTarjeta));
+                em.persist(venta);
+            } catch (TarjetaInvalidaExcepcion | ProductoInvalidoExcepcion e) {
+                throw new RuntimeException(e);
+            }
         });
     }
     @Override
