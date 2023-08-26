@@ -43,7 +43,7 @@ public class VentasOnlineTest {
             Carrito miCarrito = new Carrito(santi, productos, promociones, tarjetaServicio);
 
             // Ejercitación
-            double montoTotalSinDescuentosVigentes = miCarrito.calcularMontoConDescuentos(new TarjetaMemeCard());
+            double montoTotalSinDescuentosVigentes = miCarrito.calcularMontoConDescuentos(new TarjetaDeCredito());
 
             // Verificación
             Assert.assertEquals("true",750.0, montoTotalSinDescuentosVigentes,00);
@@ -80,7 +80,7 @@ public class VentasOnlineTest {
             Carrito miCarrito = new Carrito(santi, productos, promociones, tarjetaServicio);
 
             // Ejercitación
-            double montoTotalConDescuentoAcme = miCarrito.calcularMontoConDescuentos(new TarjetaMemeCard());
+            double montoTotalConDescuentoAcme = miCarrito.calcularMontoConDescuentos(new TarjetaDeCredito());
 
             // Verificación
             Assert.assertEquals("true",737.5, montoTotalConDescuentoAcme,00);
@@ -108,7 +108,7 @@ public class VentasOnlineTest {
             productos.add(dinamita);
             productos.add(ropa);
 
-            TarjetaDeCredito miTarjeta = new TarjetaMemeCard();
+            TarjetaDeCredito miTarjeta = new TarjetaDeCredito();
 
             PromocionDeCompra promocionMemeCard = new PromocionDeCompra(LocalDate.now().minusDays(5), LocalDate.now().plusDays(5), miTarjeta);
             ArrayList<Promocion> promociones = new ArrayList<Promocion>();
@@ -147,7 +147,7 @@ public class VentasOnlineTest {
             productos.add(dinamita);
             productos.add(ropa);
 
-            TarjetaDeCredito miTarjeta = new TarjetaMemeCard();
+            TarjetaDeCredito miTarjeta = new TarjetaDeCredito();
 
             PromocionDeCompra promocionMemeCard = new PromocionDeCompra(LocalDate.now().minusDays(5), LocalDate.now().plusDays(5), miTarjeta);
             PromocionDeProducto promocionActivaComarca = new PromocionDeProducto(LocalDate.now().minusDays(5), LocalDate.now().plusDays(5), comarca);
@@ -193,7 +193,7 @@ public class VentasOnlineTest {
             Carrito miCarrito = new Carrito(santi, productos, promociones, tarjetaServicio);
 
             // Ejercitación
-            Venta miCompra = miCarrito.realizarCompra(new TarjetaMemeCard());
+            Venta miCompra = miCarrito.realizarCompra(new TarjetaDeCredito());
 
             // Verificación
             Assert.assertEquals("true",250.0, miCompra.montoTotal(),00);

@@ -1,7 +1,11 @@
 package ar.unrn.tp.modelo;
 
-public class Marca {
+import javax.persistence.Entity;
+
+@Entity
+public class Marca extends ModeloGenerico {
     private String nombre;
+
     public Marca(String nombre) {
         this.nombre = nombre;
     }

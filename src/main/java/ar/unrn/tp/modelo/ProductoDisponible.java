@@ -2,10 +2,18 @@ package ar.unrn.tp.modelo;
 
 import ar.unrn.tp.excepciones.ProductoInvalidoExcepcion;
 
-public class ProductoDisponible{
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+
+@Entity
+public class ProductoDisponible extends ModeloGenerico {
     private String codigo;
     private String descripcion;
+    @Embedded
     private Categoria categoria;
+    @Embedded
     private Marca marca;
     private Double precio;
 
@@ -45,7 +53,7 @@ public class ProductoDisponible{
         return marca;
     }
 
-    public boolean esDeMarca(Marca marca){
+    public boolean esDeMarca(String marca){
         return this.marca.equals(marca);
     }
 }

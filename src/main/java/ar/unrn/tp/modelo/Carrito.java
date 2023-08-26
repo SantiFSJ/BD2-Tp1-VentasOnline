@@ -33,10 +33,11 @@ public class Carrito {
             montoTotal -= promocion.aplicarDescuento(this.productos,tarjeta);
         }
         return montoTotal;
+
     }
     public Venta realizarCompra(TarjetaDeCredito tarjeta) throws TarjetaInvalidaExcepcion, ProductoInvalidoExcepcion {
         if(this.servicioTarjetas.validar(tarjeta))
-            return new Venta(LocalDateTime.now(),this.cliente,this.productos,calcularMontoConDescuentos(tarjeta));
+            return new Venta(LocalDateTime.now(),this.cliente,this.productos,calcularMontoConDescuentos(tarjeta), tarjeta);
         else
             throw new TarjetaInvalidaExcepcion();
 

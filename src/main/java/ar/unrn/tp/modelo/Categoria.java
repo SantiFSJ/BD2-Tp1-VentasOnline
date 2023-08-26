@@ -1,9 +1,13 @@
 package ar.unrn.tp.modelo;
 
-public enum Categoria {
-    DEPORTIVA,
-    CALZADO,
-    EXPLOSIVOS,
-    OTRA;
+import javax.persistence.Entity;
+
+@Entity
+public class Categoria extends ModeloGenerico{
+    private String nombre;
+
+    public Categoria(String nombre){
+        this.nombre = nombre;
+    }
 
 }

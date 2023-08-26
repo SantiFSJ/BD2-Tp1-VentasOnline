@@ -1,22 +1,45 @@
 package org.example;
 
+import ar.unrn.tp.api.*;
 import ar.unrn.tp.excepciones.FechaInvalidaExcepcion;
-import ar.unrn.tp.modelo.*;
+import ar.unrn.tp.jpa.servicios.*;
+import ar.unrn.tp.modelo.ServicioTarjetaDeCredito;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
-import static ar.unrn.tp.modelo.Categoria.DEPORTIVA;
-import static ar.unrn.tp.modelo.Categoria.EXPLOSIVOS;
 
 public class Main {
     public static void main(String[] args) {
         try {
-            ArrayList<TarjetaDeCredito> tarjetas = new ArrayList<TarjetaDeCredito>();
-            tarjetas.add(new TarjetaMemeCard());
-            Cliente santi = new Cliente("Santiago", "Fernández San Juan", "43217767", "santi@gmail.com", tarjetas);
+            MarcaService marcaService = new MarcaServiceImpl();
+            marcaService.crearMarca("ACME");
 
-            Marca comarca = new Marca("Comarca");
+            ClienteService clienteService = new ClienteServiceImpl();
+            clienteService.crearCliente("Santiago2", "Fernández San Juan", "43217767", "santi@gmail.com");
+            clienteService.crearCliente("Santiago2", "Fernández San Juan", "43217768", "santi@gmail.com");
+           clienteService.agregarTarjeta((long) 2,"2920-5121-2524","MemeCard");
+            CategoriaService categoriaService = new CategoriaServiceImpl();
+
+            categoriaService.crearCategoria("DEPORTIVA");
+            categoriaService.crearCategoria("EXPLOSIVOS");
+
+            ProductoService productoService = new ProductoServiceImpl();
+
+            productoService.crearProducto("1251", "Es dinamita", 250.0, (long)5, (long)1);
+            productoService.crearProducto("1252", "Son minas terrestres antipersonales", 500.0, (long)5, (long)1);
+
+            DescuentoService descuentoService = new DescuentoServiceImpl();
+
+            descuentoService.crearDescuentoSobreTotal("MemeCard",LocalDate.now().minusDays(5),LocalDate.now().plusDays(5),5);
+
+            descuentoService.crearDescuento("ACME",LocalDate.now().minusDays(5),LocalDate.now().plusDays(5),5);
+
+            VentaService ventaService = new VentaServiceImpl(new ServicioTarjetaDeCredito());
+            ventaService.realizarVenta((long) 2, List.of((long) 7,(long) 7), (long)4);
+
+            /*Marca comarca = new Marca("Comarca");
             Marca acme = new Marca("Acme");
 
             ProductoDisponible dinamita = new ProductoDisponible("1251", "Es dinamita", EXPLOSIVOS, acme, 250.0);
@@ -37,7 +60,7 @@ public class Main {
 
             System.out.println(miCarrito.calcularMontoConDescuentos(new TarjetaMemeCard()));
 
-            Venta miCompra = miCarrito.realizarCompra(new TarjetaMemeCard());
+            Venta miCompra = miCarrito.realizarCompra(new TarjetaMemeCard());*/
 
         }catch (Exception e){
             System.out.println(e.getMessage());
