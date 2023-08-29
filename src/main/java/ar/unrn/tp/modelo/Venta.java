@@ -15,8 +15,8 @@ public class Venta extends ModeloGenerico{
 
     @OneToOne
     Cliente cliente;
-    @OneToMany(cascade={CascadeType.ALL})
-    List<ProductoVendido> productoVendidos;
+    /*@OneToMany(cascade={CascadeType.ALL})
+    List<ProductoVendido> productoVendidos;*/
     @OneToOne
     TarjetaDeCredito tarjetaDeCredito;
     double montoTotal;
@@ -24,7 +24,7 @@ public class Venta extends ModeloGenerico{
     public Venta(LocalDateTime fechaYHora, Cliente cliente, List<ProductoDisponible> productoVendidos, double montoTotal, TarjetaDeCredito tarjetaDeCredito) throws ProductoInvalidoExcepcion {
         this.fechaYHora = fechaYHora;
         this.cliente = cliente;
-        this.productoVendidos = new ArrayList<ProductoVendido>();
+        //this.productoVendidos = new ArrayList<ProductoVendido>();
         this.montoTotal = montoTotal;
         this.tarjetaDeCredito = tarjetaDeCredito;
         this.parseProductos(productoVendidos);
@@ -35,12 +35,13 @@ public class Venta extends ModeloGenerico{
     }
 
     public int cantidadDeProductos(){
-        return this.productoVendidos.size();
+        //return this.productoVendidos.size();
+        return 0;
     }
 
     private void parseProductos(List<ProductoDisponible> productoVendidos) throws ProductoInvalidoExcepcion {
-        for(ProductoDisponible producto: productoVendidos){
-            this.productoVendidos.add(new ProductoVendido(producto));
-        }
+        /*for(ProductoDisponible producto: productoVendidos){
+            //this.productoVendidos.add(new ProductoVendido(producto));
+        }*/
     }
 }

@@ -63,7 +63,7 @@ public class Main {
             Venta miCompra = miCarrito.realizarCompra(new TarjetaMemeCard());*/
 
         }catch (Exception e){
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
 
 
