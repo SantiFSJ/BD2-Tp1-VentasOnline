@@ -8,11 +8,30 @@ import java.util.List;
 
 @Entity
 public class PromocionDeProducto extends Promocion{
+
+    protected LocalDate fechaInicio;
+    protected LocalDate fechaFin;
+    protected float porcentaje;
     private String marcaDeProducto;
     public PromocionDeProducto(LocalDate fechaInicio, LocalDate fechaFin, String marcaDeProducto, float porcentaje) throws FechaInvalidaExcepcion {
-        super(fechaInicio,fechaFin,porcentaje);
+        this.validarFechas(fechaInicio,fechaFin);
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.porcentaje = porcentaje;
         this.marcaDeProducto = marcaDeProducto;
     }
+
+    private void validarFechas(LocalDate fechaInicio, LocalDate fechaFin) throws FechaInvalidaExcepcion {
+        if(fechaInicio.isAfter(fechaFin)){
+            throw new FechaInvalidaExcepcion();
+        }
+    }
+
+    @Override
+    protected Boolean esValida(){
+        return this.fechaInicio.isBefore(LocalDate.now()) && this.fechaFin.isAfter(LocalDate.now());
+    }
+
 
     @Override
     public double aplicarDescuento(List<ProductoDisponible> productos, TarjetaDeCredito tarjeta){

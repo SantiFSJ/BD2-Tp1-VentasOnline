@@ -1,19 +1,18 @@
 package ar.unrn.tp.modelo;
 
 import ar.unrn.tp.excepciones.ProductoInvalidoExcepcion;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.*;
 
 @Entity
+@NoArgsConstructor
 public class ProductoDisponible extends ModeloGenerico {
     private String codigo;
     private String descripcion;
-    @Embedded
+    @ManyToOne
     private Categoria categoria;
-    @Embedded
+    @ManyToOne
     private Marca marca;
     private Double precio;
 
@@ -51,6 +50,10 @@ public class ProductoDisponible extends ModeloGenerico {
 
     public Marca getMarca() {
         return marca;
+    }
+
+    public ProductoVendido obtenerVendido() throws ProductoInvalidoExcepcion {
+        return new ProductoVendido(this.codigo,this.descripcion,this.categoria,this.marca,this.precio);
     }
 
     public boolean esDeMarca(String marca){

@@ -14,7 +14,7 @@ public class Carrito {
 
     public Carrito(Cliente cliente, List<ProductoDisponible> productos, List<Promocion> promociones, ServicioValidadorDeTarjetas servicioTarjetas) {
         this.cliente = cliente;
-        //this.productos = productos;
+        this.productos = productos;
         this.promociones = promociones;
         this.servicioTarjetas = servicioTarjetas;
     }
@@ -28,11 +28,11 @@ public class Carrito {
     }
 
     public double calcularMontoConDescuentos(TarjetaDeCredito tarjeta){
-        /*double montoTotal = this.calcularMontoTotal();
+        double montoTotal = this.calcularMontoTotal();
         for(Promocion promocion: this.promociones){
             montoTotal -= promocion.aplicarDescuento(this.productos,tarjeta);
-        }*/
-        return 0.0;
+        }
+        return montoTotal;
 
     }
     public Venta realizarCompra(TarjetaDeCredito tarjeta) throws TarjetaInvalidaExcepcion, ProductoInvalidoExcepcion {
