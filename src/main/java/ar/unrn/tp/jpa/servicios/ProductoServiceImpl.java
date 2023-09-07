@@ -4,13 +4,18 @@ import ar.unrn.tp.api.ProductoService;
 import ar.unrn.tp.excepciones.ClienteInvalidoExcepcion;
 import ar.unrn.tp.excepciones.EmailInvalidoExcepcion;
 import ar.unrn.tp.excepciones.ProductoInvalidoExcepcion;
-import ar.unrn.tp.modelo.Categoria;
-import ar.unrn.tp.modelo.Marca;
-import ar.unrn.tp.modelo.ProductoDisponible;
+import ar.unrn.tp.modelo.*;
 
+import javax.persistence.EntityManagerFactory;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductoServiceImpl extends GenericServiceImpl implements ProductoService {
+
+    public ProductoServiceImpl(EntityManagerFactory emf){
+        super(emf);
+    }
+
     @Override
     public void crearProducto(String codigo, String descripcion, double precio, Long idCategoría, Long idMarca) {
         inTransactionExecute((em) -> {
@@ -25,12 +30,30 @@ public class ProductoServiceImpl extends GenericServiceImpl implements ProductoS
     }
 
     @Override
-    public void modificarProducto(Long idProducto) {
-
+    public void modificarProducto(Long idProducto, String codigo, String descripcion, double precio, Long idCategoría, Long idMarca) {
+        inTransactionExecute((em) -> {
+            try {
+                Marca marca = em.getReference(Marca.class, idMarca);
+                Categoria categoria = em.getReference(Categoria.class, idCategoría);
+                ProductoDisponible producto = em.getReference(ProductoDisponible.class, idProducto);
+                producto.actualizarDescripcion(descripcion);
+                producto.actualizarCodigo(codigo);
+                producto.actualizarCategoria(categoria);
+                producto.actualizarMarca(marca);
+                producto.actualizarPrecio(precio);
+                em.persist(producto);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     @Override
-    public List listarProductos() {
-        return null;
+    public List<ProductoDisponible> listarProductos() {
+        List<ProductoDisponible> productos = new ArrayList<>();
+        inTransactionExecute((em) -> {
+            productos.addAll(em.createQuery("SELECT p FROM ProductoDisponible p", ProductoDisponible.class).getResultList());
+        });
+        return productos;
     }
 }

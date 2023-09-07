@@ -8,11 +8,14 @@ import ar.unrn.tp.modelo.ServicioTarjetaDeCredito;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 
 public class Main {
     public static void main(String[] args) {
-        try {
+
+        /*try {
             MarcaService marcaService = new MarcaServiceImpl();
             marcaService.crearMarca("ACME");
 
@@ -60,12 +63,12 @@ public class Main {
 
             System.out.println(miCarrito.calcularMontoConDescuentos(new TarjetaMemeCard()));
 
-            Venta miCompra = miCarrito.realizarCompra(new TarjetaMemeCard());*/
+            Venta miCompra = miCarrito.realizarCompra(new TarjetaMemeCard());
 
         }catch (Exception e){
             e.printStackTrace();
         }
-
+        */
 
 
     }

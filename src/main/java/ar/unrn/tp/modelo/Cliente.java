@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.jdo.annotations.Unique;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ public class Cliente extends ModeloGenerico {
     private String dni;
     private String email;
 
-    @OneToMany(cascade={CascadeType.ALL})
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<TarjetaDeCredito> tarjetasDeCredito;
 
 
@@ -47,6 +48,22 @@ public class Cliente extends ModeloGenerico {
         this.tarjetasDeCredito.add(tarjetaDeCredito);
     }
 
+    public List<TarjetaDeCredito> tarjetasDeCredito(){
+        return this.tarjetasDeCredito;
+    }
+
+    public String nombre(){
+        return this.nombre;
+    }
+
+    public Boolean tieneEstaTarjeta(TarjetaDeCredito tarjeta){
+        boolean contieneTarjeta = false;
+        for(TarjetaDeCredito tarjetaDeCredito: this.tarjetasDeCredito){
+            if(tarjetaDeCredito.equals(tarjeta))
+                contieneTarjeta = true;
+        }
+        return contieneTarjeta;
+    }
     private void validarCliente(String nombre, String apellido, String dni, String email) throws ClienteInvalidoExcepcion, EmailInvalidoExcepcion {
         if (nombre == null
                 || nombre.equals("")
@@ -64,6 +81,14 @@ public class Cliente extends ModeloGenerico {
             }
         }
 
+    }
+
+    public void cambiarNombre(String nombre){
+        this.nombre = nombre;
+    }
+
+    public boolean sos(Cliente cliente){
+        return this.equals(cliente);
     }
 
     private boolean validarEmail(String email){

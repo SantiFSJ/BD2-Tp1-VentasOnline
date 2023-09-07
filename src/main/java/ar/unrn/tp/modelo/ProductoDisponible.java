@@ -3,11 +3,14 @@ package ar.unrn.tp.modelo;
 import ar.unrn.tp.excepciones.ProductoInvalidoExcepcion;
 import lombok.NoArgsConstructor;
 
+import javax.jdo.annotations.Unique;
 import javax.persistence.*;
 
 @Entity
 @NoArgsConstructor
 public class ProductoDisponible extends ModeloGenerico {
+
+    @Unique
     private String codigo;
     private String descripcion;
     @ManyToOne
@@ -38,22 +41,41 @@ public class ProductoDisponible extends ModeloGenerico {
     public double precio(){
         return this.precio;
     }
-    public String codigo() {
+    private String codigo() {
         return codigo;
     }
-    public String descripcion() {
-        return descripcion;
-    }
-    public Categoria categoria() {
-        return categoria;
+
+    public void actualizarDescripcion(String descripcion){
+        this.descripcion = descripcion;
     }
 
-    public Marca getMarca() {
-        return marca;
+    public void actualizarCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public void actualizarCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
+    public void actualizarMarca(Marca marca) {
+        this.marca = marca;
+    }
+
+    public void actualizarPrecio(Double precio) {
+        this.precio = precio;
     }
 
     public ProductoVendido obtenerVendido() throws ProductoInvalidoExcepcion {
         return new ProductoVendido(this.codigo,this.descripcion,this.categoria,this.marca,this.precio);
+    }
+
+    private String descripcion(){
+        return this.descripcion;
+    }
+    public boolean sosIgualA(ProductoDisponible producto){
+        return this.codigo.equals(producto.codigo()) &&
+                this.precio == producto.precio() &&
+                this.descripcion .equals(producto.descripcion());
     }
 
     public boolean esDeMarca(String marca){

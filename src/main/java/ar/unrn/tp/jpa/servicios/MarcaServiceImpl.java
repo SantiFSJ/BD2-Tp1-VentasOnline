@@ -5,7 +5,14 @@ import ar.unrn.tp.excepciones.ClienteInvalidoExcepcion;
 import ar.unrn.tp.excepciones.EmailInvalidoExcepcion;
 import ar.unrn.tp.modelo.Marca;
 
+import javax.persistence.EntityManagerFactory;
+
 public class MarcaServiceImpl extends GenericServiceImpl implements MarcaService {
+
+    public MarcaServiceImpl(EntityManagerFactory emf){
+        super(emf);
+    }
+
     @Override
     public void crearMarca(String nombre) {
         inTransactionExecute((em) -> {

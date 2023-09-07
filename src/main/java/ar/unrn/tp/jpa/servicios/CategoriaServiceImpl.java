@@ -5,7 +5,14 @@ import ar.unrn.tp.excepciones.ClienteInvalidoExcepcion;
 import ar.unrn.tp.excepciones.EmailInvalidoExcepcion;
 import ar.unrn.tp.modelo.Categoria;
 
+import javax.persistence.EntityManagerFactory;
+
 public class CategoriaServiceImpl extends GenericServiceImpl implements CategoriaService{
+
+    public CategoriaServiceImpl(EntityManagerFactory emf){
+        super(emf);
+    }
+
 
     @Override
     public void crearCategoria(String nombre) {

@@ -37,6 +37,29 @@ public class PromocionDeCompra extends Promocion{
         }
     }
 
+    private String marcaDeTarjeta(){
+        return this.marcaDeTarjeta;
+    }
+
+    private LocalDate fechaDeInicio(){
+        return this.fechaInicio;
+    }
+
+    private LocalDate fechaDeFin(){
+        return this.fechaFin;
+    }
+
+    private float porcentaje(){
+        return this.porcentaje;
+    }
+
+    public boolean sosIgual(PromocionDeCompra promocion){
+        return this.marcaDeTarjeta.equals(promocion.marcaDeTarjeta()) &&
+                this.fechaInicio.equals(promocion.fechaDeInicio()) &&
+                this.fechaFin.equals((promocion.fechaDeFin())) &&
+                this.porcentaje == promocion.porcentaje();
+    }
+
     @Override
     protected Boolean esValida(){
         return this.fechaInicio.isBefore(LocalDate.now()) && this.fechaFin.isAfter(LocalDate.now());

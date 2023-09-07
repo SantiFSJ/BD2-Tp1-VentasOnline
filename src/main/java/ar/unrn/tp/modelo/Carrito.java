@@ -19,7 +19,13 @@ public class Carrito {
         this.servicioTarjetas = servicioTarjetas;
     }
 
-    private double calcularMontoTotal(){
+    public Carrito(List<ProductoDisponible> productos, List<Promocion> promociones, ServicioValidadorDeTarjetas servicioTarjetas) {
+        this.productos = productos;
+        this.promociones = promociones;
+        this.servicioTarjetas = servicioTarjetas;
+    }
+
+    public double calcularMontoTotal(){
         double sumaPrecios = 0.0;
         for(ProductoDisponible producto: productos){
             sumaPrecios += producto.precio();

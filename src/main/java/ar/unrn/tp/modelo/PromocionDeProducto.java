@@ -46,4 +46,24 @@ public class PromocionDeProducto extends Promocion{
 
     }
 
+    private String marcaDeProducto(){ return this.marcaDeProducto; }
+    private LocalDate fechaDeInicio(){
+        return this.fechaInicio;
+    }
+    private LocalDate fechaDeFin(){
+        return this.fechaFin;
+    }
+    private float porcentaje(){
+        return this.porcentaje;
+    }
+
+
+    public boolean sosIgual(PromocionDeProducto promocion){
+        return this.marcaDeProducto.equals(promocion.marcaDeProducto()) &&
+                this.fechaInicio.equals(promocion.fechaDeInicio()) &&
+                this.fechaFin.equals((promocion.fechaDeFin())) &&
+                this.porcentaje == promocion.porcentaje();
+    }
+
+
 }

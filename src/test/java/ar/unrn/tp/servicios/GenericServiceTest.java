@@ -1,43 +1,47 @@
-package ar.unrn.tp.jpa.servicios;
+package ar.unrn.tp.servicios;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
-public abstract class GenericServiceImpl {
+public class GenericServiceTest {
+
     protected EntityManagerFactory emf;
 
-
-    public GenericServiceImpl(EntityManagerFactory emf){
-        this.emf = emf;
-    }
-    private void setUp(){
-        //this.emf = Persistence.createEntityManagerFactory("objectdb:myDbTestFile.tmp");
+    @BeforeEach
+    protected void setUpEmf(){
+        emf = Persistence.createEntityManagerFactory("objectdb:myDbTestFile.tmp;drop");
     }
 
     public void inTransactionExecute(Consumer<EntityManager> bloqueDeCodigo) {
-        this.setUp();
-        EntityManager em = this.emf.createEntityManager();
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("objectdb:myDbTestFile.tmp;drop");
+        EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
-
         try {
             tx.begin();
-            bloqueDeCodigo.accept(em);
-            tx.commit();
 
+            bloqueDeCodigo.accept(em);
+
+            tx.commit();
         } catch (Exception e) {
             tx.rollback();
             throw e;
         } finally {
             if (em != null && em.isOpen())
                 em.close();
+            if (emf != null)
+                emf.close();
         }
     }
 
+    @AfterEach
     public void tearDown() {
-        this.emf.close();
+        emf.close();
     }
+
 }

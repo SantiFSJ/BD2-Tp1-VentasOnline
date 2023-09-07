@@ -14,6 +14,19 @@ public class TarjetaDeCredito extends ModeloGenerico{
         this.numero = numero;
     }
 
+
+    public boolean equals(TarjetaDeCredito tarjeta){
+        return (this.nombre.equals(tarjeta.nombre()) && this.numero.equals(tarjeta.numero()));
+    }
+
+    private String nombre(){
+        return this.nombre;
+    }
+
+    private String numero(){
+        return this.numero;
+    }
+
     public Boolean esDeMarca(String marcaDeTarjeta){
         return this.nombre.equals(marcaDeTarjeta);
     }
